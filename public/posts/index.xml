@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on The Pseudocodeus</title>
-    <link>https://github.com//posts/</link>
+    <link>http://localhost:1313//posts/</link>
     <description>Recent content in Posts on The Pseudocodeus</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 30 Jun 2025 12:08:32 -0400</lastBuildDate>
-    <atom:link href="https://github.com//posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313//posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My First Post</title>
-      <link>https://github.com//posts/my-first-post/</link>
+      <link>http://localhost:1313//posts/my-first-post/</link>
       <pubDate>Mon, 30 Jun 2025 12:08:32 -0400</pubDate>
-      <guid>https://github.com//posts/my-first-post/</guid>
-      <description>&lt;h2 class=&#34;heading&#34; id=&#34;available-on-medium&#34;&gt;&#xA;  Available On Medium&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#available-on-medium&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;Check out my post about &lt;a href=&#34;https://medium.com/@ajigherighe_62759/the-greatest-obstacle-to-doing-anything-why-starting-matters-most-b6742f6c0c52&#34;&gt;Learning-By-Doing&lt;/a&gt; over on &lt;strong&gt;Medium&lt;/strong&gt;.&lt;/p&gt;</description>
+      <guid>http://localhost:1313//posts/my-first-post/</guid>
+      <description>&lt;h2 id=&#34;available-on-medium&#34;&gt;Available On Medium&lt;/h2&gt;&#xA;&lt;p&gt;Check out my post about &lt;a href=&#34;https://medium.com/@ajigherighe_62759/the-greatest-obstacle-to-doing-anything-why-starting-matters-most-b6742f6c0c52&#34;&gt;Learning-By-Doing&lt;/a&gt; over on &lt;strong&gt;Medium&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
