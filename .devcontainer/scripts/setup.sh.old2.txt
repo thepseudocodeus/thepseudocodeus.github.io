@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Starting devcontainer setup..."
+
+# Dynamically get project name
+PROJECT_NAME=$(basename "$(pwd)")
+ENV_NAME="$PROJECT_NAME"
+
+# Check for micromamba
+if ! command -v micromamba &>/dev/null; then
+    echo "❌ Micromamba not installed!"
+    exit 1
+else
+    echo "✅ Micromamba found"
+fi
+
+# Create environment if it doesn't exist
+if ! micromamba env list | grep -q "$ENV_NAME"; then
+    echo "🐍 Creating Python 3.13 environment '$ENV_NAME'..."
+    micromamba create -y -n "$ENV_NAME" python=3.13
+else
+    echo "✅ Environment '$ENV_NAME' already exists"
+fi
+
+# Activate environment
+eval "$(micromamba shell hook -s bash)"
+micromamba activate "$ENV_NAME"
+
+# Install Poetry dependencies if poetry exists
+if command -v poetry &>/dev/null; then
+    echo "📦 Installing Python dependencies via Poetry..."
+    poetry install
+else
+    echo "⚠️ Poetry not installed; skipping dependency installation"
+fi
+
+echo "✅ Devcontainer setup complete!"

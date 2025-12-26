@@ -1,0 +1,49 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "Debian",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
+	"features": {
+		"ghcr.io/devcontainers/features/anaconda:1": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/git-lfs:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers/features/rust:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/duckdb-cli:1": {},
+		"ghcr.io/jungaretti/features/make:1": {},
+		"ghcr.io/warrenbuckley/codespace-features/sqlite:1": {},
+		"ghcr.io/mamba-org/devcontainer-features/micromamba:1": {},
+		"ghcr.io/devcontainers-community/features/llvm:3": {},
+		"ghcr.io/devcontainers-community/npm-features/prettier:1": {},
+		"ghcr.io/itsmechlark/features/postgresql:1": {},
+		"ghcr.io/julialang/devcontainer-features/julia:1": {},
+		"ghcr.io/devcontainers-extra/features/black:2": {},
+		"ghcr.io/devcontainers-extra/features/cmake:1": {},
+		"ghcr.io/devcontainers-extra/features/fzf:1": {},
+		"ghcr.io/devcontainers-extra/features/git-lfs:1": {},
+		"ghcr.io/devcontainers-extra/features/mosh-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/neovim-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/nmap-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/poetry:2": {},
+		"ghcr.io/devcontainers-extra/features/ripgrep:1": {},
+		"ghcr.io/devcontainers-extra/features/shellcheck:1": {},
+		"ghcr.io/devcontainers-extra/features/sqlfluff:1": {},
+		"ghcr.io/devcontainers-extra/features/tmux-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/wget-apt-get:1": {}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

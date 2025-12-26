@@ -1,0 +1,16 @@
+#!/bin/bash
+echo "Checking dev environment..."
+MISSING=0
+
+command -v python3 >/dev/null 2>&1 || { echo "Python missing"; MISSING=1; }
+command -v poetry >/dev/null 2>&1 || { echo "Poetry missing"; MISSING=1; }
+command -v node >/dev/null 2>&1 || { echo "Node missing"; MISSING=1; }
+command -v julia >/dev/null 2>&1 || { echo "Julia missing"; MISSING=1; }
+command -v sqlite3 >/dev/null 2>&1 || { echo "SQLite missing"; MISSING=1; }
+
+if [ $MISSING -eq 1 ]; then
+    echo "Some tools are missing. Running repair..."
+    /workspace/.devcontainer/scripts/repair_env.sh
+else
+    echo "All essential tools present."
+fi

@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔍 Checking devcontainer environment..."
+
+# --- Micromamba ---
+if ! command -v micromamba &>/dev/null; then
+    echo "❌ Micromamba is not installed!"
+    exit 1
+else
+    echo "✅ Micromamba found"
+fi
+
+# --- Python environment ---
+if micromamba env list | grep -q 'dev'; then
+    echo "✅ 'dev' Python environment exists"
+else
+    echo "⚠️ 'dev' Python environment does not exist. Run setup.sh to create it."
+fi
+
+# --- Python ---
+if command -v python &>/dev/null; then
+    PY_VER=$(python --version)
+    echo "✅ Python found: $PY_VER"
+else
+    echo "❌ Python is missing!"
+fi
+
+# --- Node.js ---
+if command -v node &>/dev/null; then
+    NODE_VER=$(node --version)
+    echo "✅ Node.js found: $NODE_VER"
+else
+    echo "⚠️ Node.js is missing!"
+fi
+
+# --- Git ---
+if command -v git &>/dev/null; then
+    GIT_VER=$(git --version)
+    echo "✅ Git found: $GIT_VER"
+else
+    echo "❌ Git is missing!"
+fi
+
+# --- tmux ---
+if command -v tmux &>/dev/null; then
+    TMUX_VER=$(tmux -V)
+    echo "✅ tmux found: $TMUX_VER"
+else
+    echo "⚠️ tmux is missing!"
+fi
+
+# --- Databases ---
+if command -v psql &>/dev/null; then
+    PSQL_VER=$(psql --version)
+    echo "✅ PostgreSQL CLI found: $PSQL_VER"
+else
+    echo "⚠️ PostgreSQL CLI not found"
+fi
+
+if command -v sqlite3 &>/dev/null; then
+    SQLITE_VER=$(sqlite3 --version)
+    echo "✅ SQLite3 found: $SQLITE_VER"
+else
+    echo "⚠️ SQLite3 not found"
+fi
+
+if command -v duckdb &>/dev/null; then
+    DUCKDB_VER=$(duckdb --version)
+    echo "✅ DuckDB CLI found: $DUCKDB_VER"
+else
+    echo "⚠️ DuckDB CLI not found"
+fi
+
+# --- Python dev tools ---
+for tool in streamlit jupyter uvicorn; do
+    if command -v $tool &>/dev/null; then
+        TOOL_VER=$($tool --version 2>&1 | head -n 1)
+        echo "✅ $tool found: $TOOL_VER"
+    else
+        echo "⚠️ $tool not installed"
+    fi
+done
+
+echo "🔹 Devcontainer environment check complete!"

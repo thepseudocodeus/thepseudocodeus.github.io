@@ -1,0 +1,44 @@
+# Use Microsoft’s Debian-based dev container image
+FROM mcr.microsoft.com/devcontainers/base:debian
+
+# Set environment variables for language and frontend
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive \
+    POETRY_HOME="/opt/poetry" \
+    PATH="/opt/poetry/bin:$PATH"
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3 \
+    python3-venv \
+    python3-pip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 - \
+    && ln -s /root/.local/bin/poetry /usr/local/bin/poetry
+
+# Configure Poetry to create venv in project directory
+RUN poetry config virtualenvs.in-project true
+
+# Set working directory
+WORKDIR /workspace
+
+# Copy only the dependency files initially; the rest will be copied later
+COPY pyproject.toml poetry.lock* ./
+
+# Install dependencies (and create the local virtual environment)
+RUN poetry install --no-root
+
+# Copy the rest of the source code
+COPY . .
+
+# Default command
+CMD ["/bin/bash"]

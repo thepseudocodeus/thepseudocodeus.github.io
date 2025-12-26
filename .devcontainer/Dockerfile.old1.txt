@@ -1,0 +1,63 @@
+# Start with a base image that already has some dev tools
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+
+# ----------------------------
+# 1. System packages
+# ----------------------------
+RUN apt-get update && apt-get install -y wget software-properties-common \
+--no-install-recommends curl dialog apt-utils git build-essential sudo libssl-dev libffi-dev \
+libpq-dev sqlite3 locales ca-certificates unzip pkg-config jq htop bash \
+&& rm -rf /var/lib/apt/lists/*
+
+# Set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+
+# ----------------------------
+# 2. Python 3.12 + Poetry
+# ----------------------------
+RUN add-apt-repository ppa:deadsnakes/ppa -y \
+    && apt-get update && apt-get install -y python3.12 python3.12-venv python3.12-dev python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV POETRY_HOME="/opt/poetry"
+ENV PATH="$POETRY_HOME/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
+# Auto-enable Poetry virtualenvs inside project
+RUN poetry config virtualenvs.in-project true
+
+# ----------------------------
+# 3. Node.js (frontend / JS)
+# ----------------------------
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
+
+# ----------------------------
+# 4. Rust, Julia, Elixir, DB clients (optional)
+# ----------------------------
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH="/root/.cargo/bin:$PATH"
+
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.2-linux-x86_64.tar.gz \
+    && tar -xvzf julia-1.11.2-linux-x86_64.tar.gz -C /opt/ \
+    && ln -s /opt/julia-1.11.2/bin/julia /usr/local/bin/julia \
+    && rm julia-1.11.2-linux-x86_64.tar.gz
+
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
+    && dpkg -i erlang-solutions_2.0_all.deb \
+    && apt-get update && apt-get install -y erlang elixir \
+    && rm -rf /var/lib/apt/lists/* erlang-solutions_2.0_all.deb
+
+# ----------------------------
+# 5. Workspace
+# ----------------------------
+WORKDIR /workspace
+COPY pyproject.toml poetry.lock* /workspace/
+RUN poetry install --no-root
+COPY . /workspace
+
+CMD ["bash"]

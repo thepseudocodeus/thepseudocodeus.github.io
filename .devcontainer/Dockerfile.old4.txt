@@ -1,0 +1,47 @@
+FROM mcr.microsoft.com/devcontainers/base:debian
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-setuptools \
+    python3-pip \
+    python3-venv \
+    pipx \
+    unzip \
+    zstd \
+    locales \
+    tmux \
+    curl \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pipx install poetry && \
+    pipx upgrade poetry && \
+    pipx ensurepath && \
+    poetry config virtualenvs.create false
+
+RUN curl -Ls https://micro.mamba.pm/install.sh | bash && \
+    /root/.local/bin/micromamba shell init -s bash && \
+    echo 'export PATH="/root/.local/bin:$PATH"' >> ~/.bashrc
+
+RUN /root/.local/bin/micromamba create -n dev -c conda-forge python=3.11 && \
+    /root/.local/bin/micromamba clean --all --yes
+
+SHELL ["/bin/bash", "-c"]
+RUN echo 'source ~/.bashrc && micromamba activate dev' >> ~/.bashrc
+
+WORKDIR /workspace
+
+COPY pyproject.toml poetry.lock* ./
+RUN poetry install --no-root
+
+COPY . .
+
+CMD ["/bin/bash", "-c", "source ~/.bashrc && exec bash"]

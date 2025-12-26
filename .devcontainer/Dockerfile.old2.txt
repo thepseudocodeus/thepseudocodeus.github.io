@@ -1,0 +1,51 @@
+FROM mcr.microsoft.com/devcontainers/python:3.12
+
+# ----------------------------
+# 1. Essential system packages
+# ----------------------------
+RUN apt-get update && apt-get install -y \
+    curl wget git htop unzip jq build-essential sqlite3 \
+    libssl-dev libffi-dev libpq-dev locales \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+
+# ----------------------------
+# 2. Poetry
+# ----------------------------
+ENV POETRY_HOME="/opt/poetry"
+ENV PATH="$POETRY_HOME/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN poetry config virtualenvs.in-project true
+
+# ----------------------------
+# 3. Node.js (latest LTS dynamically)
+# ----------------------------
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
+
+# ----------------------------
+# 4. Julia (latest stable LTS)
+# ----------------------------
+RUN JULIA_URL=$(curl -s https://api.github.com/repos/JuliaLang/julia/releases/latest | \
+    grep browser_download_url | grep "linux-x86_64.tar.gz" | cut -d '"' -f 4) && \
+    wget $JULIA_URL -O julia.tar.gz && \
+    tar -xvzf julia.tar.gz -C /opt/ && \
+    JULIA_DIR=$(tar -tf julia.tar.gz | head -1 | cut -f1 -d"/") && \
+    ln -s /opt/$JULIA_DIR/bin/julia /usr/local/bin/julia && \
+    rm julia.tar.gz
+
+# ----------------------------
+# 5. Workspace
+# ----------------------------
+WORKDIR /workspace
+COPY pyproject.toml poetry.lock* /workspace/
+RUN poetry install --no-root
+COPY . /workspace
+
+CMD ["bash"]

@@ -1,0 +1,68 @@
+{
+  "name": "RenTec-DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock",
+    "PYTHONPATH": "src"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/mambaforge:1": {
+      "version": "latest",
+      "installMicromamba": "true",
+      "mambaforgeVersion": "latest",
+      "installPython": "true",
+      "pythonVersion": "3.13"
+    },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+        "installZsh": false,
+        "installOhMyZsh": false,
+        "installTmux": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/rust:1": {}
+  },
+  "forwardPorts": [
+    3000, 5000, 5173, 6006, 7000, 8000, 8080, 8501, 8888, 1234, 5432
+  ],
+  //"postCreateCommand": "bash .devcontainer/scripts/setup.sh",
+  "postCreateCommand": "bash -c \"$(wget -O - https://apt.llvm.org/llvm.sh)\"" ,
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "usernamehw.errorlens",
+        "ryanluker.vscode-coverage-gutters",
+        "eamodio.gitlens",
+        "charliermarsh.ruff",
+        "ms-python.black-formatter"
+      ],x
+      "settings": {
+        "python.defaultInterpreterPath": "/home/vscode/.conda/envs/pdf_analyzer/bin/python",
+        "python.formatting.provider": "black",
+        "python.languageServer": "Pylance",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
+          "source.fixAll": "explicit"
+        },
+        "python.formatting.blackArgs": ["--line-length=88"],
+        "python.linting.lintOnSave": true,
+        "python.linting.pylintEnabled": false,
+        "python.linting.ruffEnabled": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.diagnosticMode": "workspace"
+      }
+    }
+  }
+}

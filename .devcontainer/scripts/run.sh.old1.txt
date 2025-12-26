@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+PROJECT_NAME=$(basename "$(pwd)")
+ENV_NAME="$PROJECT_NAME"
+
+# Activate Micromamba environment
+eval "$(micromamba shell hook -s bash)"
+micromamba activate "$ENV_NAME"
+
+# Run command passed as arguments
+if [ "$#" -eq 0 ]; then
+    echo "Usage: ./run.sh <python_script.py> [args...]"
+    exit 1
+fi
+
+python "$@"

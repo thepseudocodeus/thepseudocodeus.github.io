@@ -1,0 +1,43 @@
+[
+  {
+    "key": "ctrl+alt+r",
+    "command": "workbench.action.tasks.runTask",
+    "args": "run tests"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+alt+f",
+    "command": "editor.action.formatSelection"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "editor.action.organizeImports"
+  },
+  {
+    "key": "ctrl+alt+t",
+    "command": "python.execInTerminal"
+  },
+  {
+    "key": "ctrl+alt+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+alt+g",
+    "command": "git.stageAll"
+  },
+  {
+    "key": "ctrl+alt+p",
+    "command": "git.push"
+  },
+  {
+    "key": "ctrl+alt+d",
+    "command": "workbench.action.debug.start"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.closeEditorsInOtherGroups"
+  }
+]

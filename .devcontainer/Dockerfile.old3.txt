@@ -1,0 +1,63 @@
+FROM mcr.microsoft.com/devcontainers/base:ubuntu
+
+# Set locale
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+
+# Install core system tools + mamba + poetry installer
+RUN apt-get update && apt-get install -y
+RUN sleep 0.10
+RUN source ~/.bashrc && sleep 0.10
+
+RUN apt-get install -y curl wget git build-essential libssl-dev libffi-dev
+RUN sleep 0.25
+
+RUN apt-get update && apt-get install -y
+RUN source ~/.bashrc && sleep 0.25
+
+RUN apt-get install -y python3-setuptools pipx unzip zstd
+RUN sleep 0.50
+
+RUN pipx ensurepath && sleep 0.10
+RUN apt-get update && apt-get install -y
+RUN source ~/.bashrc
+
+# Install micromamba (lightweight)
+RUN "${SHELL}" <(curl -L micro.mamba.pm/install.sh) | tar -xvj bin/micromamba && \
+    mv bin/micromamba /usr/local/bin/micromamba && \
+    rm -rf bin
+
+RUN apt-get update && apt-get install -y
+RUN source ~/.bashrc && sleep 0.15
+
+RUN pipx install poetry
+RUN sleep 0.25
+
+RUN pipx upgrade poetry
+RUN poetry config virtualenvs.create false
+RUN source ~/.bashrc && sleep 0.15
+
+RUN apt-get install -y locales && rm -rf /var/lib/apt/lists/*
+
+RUN sudo apt update -y && apt-get upgrade -y
+RUN source ~/.bashrc && sleep 0.20
+
+RUN micromamba self-update
+
+# Create mamba environment with Python 3.13
+RUN micromamba create -n dev -c conda-forge python=3.13 && \
+    micromamba clean --all --yes
+
+# Activate environment by default
+SHELL ["bash", "-lc", "source $(micromamba shell hook) && micromamba activate dev"]
+
+# Set working directory
+WORKDIR /workspace
+
+COPY pyproject.toml poetry.lock* /workspace/
+RUN poetry install --no-root
+
+COPY . /workspace
+
+CMD ["bash"]

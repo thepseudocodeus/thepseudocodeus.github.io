@@ -1,0 +1,82 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // --- Existing tasks ---
+    {
+      "label": "run tests",
+      "type": "shell",
+      "command": "pytest",
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "format code",
+      "type": "shell",
+      "command": "black . && isort .",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "lint code",
+      "type": "shell",
+      "command": "ruff .",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "run notebook",
+      "type": "shell",
+      "command": "jupyter notebook",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "start dev server",
+      "type": "shell",
+      "command": "streamlit run main.py",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+
+    // --- NEW GIT AUTOMATION TASKS ---
+    {
+      "label": "create feature branch",
+      "type": "shell",
+      "command": "git checkout -b feature/${input:branchName}",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "commit all changes",
+      "type": "shell",
+      "command": "git add . && git commit -m \"${input:commitMessage}\"",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "push current branch",
+      "type": "shell",
+      "command": "git push -u origin $(git symbolic-ref --short HEAD)",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "pull latest main",
+      "type": "shell",
+      "command": "git checkout main && git pull && git checkout -",
+      "presentation": { "echo": true, "reveal": "always" }
+    },
+    {
+      "label": "merge main into feature",
+      "type": "shell",
+      "command": "git fetch origin && git merge origin/main",
+      "presentation": { "echo": true, "reveal": "always" }
+    }
+  ],
+
+  "inputs": [
+    {
+      "id": "branchName",
+      "type": "promptString",
+      "description": "Enter the feature branch name"
+    },
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "Enter the commit message"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "RAD Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "forwardPorts": [8501, 8888, 1234, 3000, 5173],
+  "postCreateCommand": "bash /workspace/.devcontainer/scripts/check_env.sh",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "ms-toolsai.jupyter",
+        "github.copilot",
+        "tabnine.tabnine-vscode",
+        "alefragnani.project-manager",
+        "alefragnani.bookmarks",
+        "0h7z.vscode-julia-format"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.testing.pytestEnabled": true,
+        "editor.fontFamily": "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
+        "editor.fontSize": 16,
+        "editor.lineHeight": 1.6,
+        "editor.cursorBlinking": "phase",
+        "editor.stickyScroll.enabled": true,
+        "editor.inlineSuggest.enabled": true
+      }
+    }
+  }
+}

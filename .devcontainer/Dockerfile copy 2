@@ -1,0 +1,63 @@
+# Use a robust, stable base image with a known libc
+FROM mcr.microsoft.com/devcontainers/base:bookworm
+
+# Set noninteractive to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install essential system libraries for AI/ML workloads
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    wget \
+    unzip \
+    jq \
+    htop \
+    locales \
+    git \
+    tmux \
+    zstd \
+    neovim \
+    sudo \
+    # Key AI/ML dependencies
+    libblas-dev \
+    liblapack-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    libssl-dev \
+    libffi-dev \
+    libpq-dev \
+    # For some plotting backends
+    libcairo2-dev \
+    libfreetype6-dev \
+    julia \
+    # For computer vision
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y curl
+RUN curl -s https://install.zerotier.com | bash
+
+# Set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# The vscode user already exists, so you can remove these lines
+# RUN groupadd --gid 1000 vscode && \
+#    useradd -s /bin/bash --uid 1000 -g vscode -m vscode && \
+#    usermod -a -G sudo vscode
+
+# Set work directory and give ownership to the vscode user
+WORKDIR /workspace
+RUN chown -R vscode:vscode /workspace
+
+# Set default user for subsequent commands
+USER vscode
+
+# Make scripts executable
+RUN chmod +x .devcontainer/scripts/*.sh || true

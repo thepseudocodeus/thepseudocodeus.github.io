@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Starting devcontainer setup..."
+
+PROJECT_NAME="pdf_analyzer"
+
+# Ensure conda is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Initialize conda
+eval "$(conda shell.bash hook 2>/dev/null)"
+
+# Create environment if missing
+if ! conda env list | grep -q "$PROJECT_NAME"; then
+    echo "🐍 Creating Conda environment '$PROJECT_NAME'..."
+    conda create -y -n "$PROJECT_NAME" python=3.13 mamba
+else
+    echo "✅ Environment '$PROJECT_NAME' already exists"
+fi
+
+conda activate "$PROJECT_NAME"
+
+# Auto-activate for future shells
+if ! grep -q "conda activate $PROJECT_NAME" /home/vscode/.bashrc; then
+    echo "conda activate $PROJECT_NAME" >>/home/vscode/.bashrc
+fi
+
+# Install core tools
+echo "📦 Installing core tools..."
+mamba install -y -c conda-forge poetry=1.* black pytest pre-commit
+
+# Project deps
+if [ -f "pyproject.toml" ]; then
+    echo "📦 Installing project dependencies via Poetry..."
+    poetry install
+fi
+
+# Pre-commit hooks
+if [ -f ".pre-commit-config.yaml" ]; then
+    echo "🔧 Installing pre-commit hooks..."
+    pre-commit install
+fi
+
+echo "✅ Devcontainer setup complete!"

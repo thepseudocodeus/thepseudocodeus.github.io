@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Starting devcontainer setup..."
+
+# Ensure Micromamba is available
+if ! command -v micromamba &>/dev/null; then
+    echo "❌ Micromamba not found! Make sure the devcontainer feature is enabled."
+    exit 1
+fi
+
+# Create 'dev' Python 3.13 environment if it doesn't exist
+if ! micromamba env list | grep -q 'dev'; then
+    echo "🐍 Creating Python 3.13 dev environment..."
+    micromamba create -y -n dev python=3.13
+else
+    echo "✅ 'dev' environment already exists"
+fi
+
+# Activate dev env in this shell session
+eval "$(micromamba shell hook -s bash)"
+micromamba activate dev
+
+# Install global npm helpers
+npm install -g http-server nodemon || true
+
+# Add rapid-MVP aliases
+{
+  echo "alias runfastapi='uvicorn app:app --reload --host 0.0.0.0 --port 8000'"
+  echo "alias runflask='flask run --host=0.0.0.0 --port=5000'"
+  echo "alias runstreamlit='streamlit run app.py --server.port=8501 --server.address=0.0.0.0'"
+  echo "alias rundash='python app.py'"
+  echo "alias dbshell='psql postgres://postgres:postgres@localhost:5432/postgres'"
+} >> ~/.bashrc
+
+# Set up tmux config
+if [ ! -f ~/.tmux.conf ]; then
+cat <<EOF > ~/.tmux.conf
+set -g mouse on
+setw -g mode-keys vi
+set -g history-limit 10000
+
+# Reload config
+bind r source-file ~/.tmux.conf \; display-message "Reloaded!"
+
+# Split windows
+bind | split-window -h
+bind - split-window -v
+
+# Status bar colors
+set -g status-bg black
+set -g status-fg white
+EOF
+fi
+
+# Git configuration
+git config --global pull.rebase false
+git config --global init.defaultBranch main
+git config --global commit.gpgsign false
+
+echo "✅ Devcontainer setup complete!"

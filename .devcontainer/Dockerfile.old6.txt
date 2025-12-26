@@ -1,0 +1,42 @@
+# Base devcontainer image
+FROM mcr.microsoft.com/devcontainers/base:bookworm
+
+# Set noninteractive to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install essential OS packages and fonts
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    wget \
+    unzip \
+    jq \
+    htop \
+    locales \
+    git \
+    tmux \
+    zstd \
+    neovim \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# Set work directory
+WORKDIR /workspace
+
+# Make scripts executable
+RUN chmod +x .devcontainer/scripts/*.sh || true
+
+# Optional: any global tools you want in every container session
+RUN npm install -g http-server nodemon || true
+
+# Optional: ensure micromamba is in PATH (the feature handles this)
+ENV PATH="/usr/local/bin:$PATH"
+
+# Default user (matches devcontainer.json remoteUser)
+USER vscode

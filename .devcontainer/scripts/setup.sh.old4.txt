@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Starting devcontainer setup..."
+
+# Get project name from a dynamic source
+PROJECT_NAME="pdf_analyzer"
+
+# Activate shell hook
+eval "$(conda shell.bash hook)"
+
+# Create and activate environment
+if ! conda env list | grep -q "$PROJECT_NAME"; then
+    echo "🐍 Creating Conda environment '$PROJECT_NAME'..."
+    conda create -y -n "$PROJECT_NAME" python=3.13 mamba
+else
+    echo "✅ Environment '$PROJECT_NAME' already exists"
+fi
+
+conda activate "$PROJECT_NAME"
+
+# Install core tools using mamba for speed
+echo "📦 Installing core tools (Poetry, Black, pytest, pre-commit) into the '$PROJECT_NAME' environment using mamba..."
+mamba install -y -c conda-forge poetry black pytest pre-commit
+
+# Install Python dependencies via Poetry
+if [ -f "pyproject.toml" ]; then
+    echo "📦 Installing project dependencies via Poetry..."
+    poetry install --no-dev
+else
+    echo "⚠️ pyproject.toml not found, skipping dependency installation."
+fi
+
+# Install pre-commit hooks for the project
+if [ -f ".pre-commit-config.yaml" ]; then
+    echo " hooks..."
+    pre-commit install
+else
+    echo "⚠️ No .pre-commit-config.yaml found, skipping pre-commit setup."
+fi
+
+echo "✅ Devcontainer setup complete!"

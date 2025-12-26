@@ -1,0 +1,44 @@
+# Base devcontainer image
+FROM mcr.microsoft.com/devcontainers/base:bookworm
+
+# Set noninteractive to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install essential OS packages, fonts, and core tools
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    wget \
+    unzip \
+    jq \
+    htop \
+    locales \
+    git \
+    tmux \
+    zstd \
+    neovim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# Install Micromamba
+RUN curl -L -o /tmp/micromamba-installer.sh "https://micro.mamba.pm/api/micromamba/linux-64/latest" && \
+    /bin/bash /tmp/micromamba-installer.sh -n base -y && \
+    rm /tmp/micromamba-installer.sh
+
+# Install global Python tools
+RUN micromamba install -y -n base -c conda-forge poetry pre-commit black pytest && \
+    micromamba clean --all --yes
+
+# Set work directory
+WORKDIR /workspace
+
+# Set default user
+USER vscode
+
+# Make scripts executable
+RUN chmod +x .devcontainer/scripts/*.sh || true

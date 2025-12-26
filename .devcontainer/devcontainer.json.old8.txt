@@ -1,0 +1,56 @@
+{
+  "name": "RAD-MVP-DevContainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock",
+    "PYTHONPATH": "src"
+  },
+  "features": {
+    "ghcr.io/mamba-org/devcontainer-features/micromamba:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/rust:1": {}
+  },
+  "forwardPorts": [3000, 5000, 5173, 6006, 7000, 8000, 8080, 8501, 8888, 1234, 5432],
+  "postCreateCommand": "./.devcontainer/scripts/setup.sh",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "github.copilot",
+        "tabnine.tabnine-vscode",
+        "alefragnani.project-manager",
+        "alefragnani.bookmarks",
+        "gruntfuggly.todo-tree",
+        "usernamehw.errorlens",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.testing.pytestEnabled": true,
+        "editor.fontFamily": "'Fira Code', 'JetBrains Mono', monospace",
+        "editor.fontSize": 16,
+        "editor.lineHeight": 1.6,
+        "editor.cursorBlinking": "phase",
+        "editor.stickyScroll.enabled": true,
+        "editor.inlineSuggest.enabled": true
+      }
+    }
+  }
+}

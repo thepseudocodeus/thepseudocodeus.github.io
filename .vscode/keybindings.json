@@ -1,0 +1,109 @@
+[
+  // ====================
+  // GENERAL EDITOR
+  // ====================
+  {
+    "key": "ctrl+alt+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.files.save"
+  },
+  {
+    "key": "ctrl+alt+w",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.closeEditorsInOtherGroups"
+  },
+  {
+    "key": "ctrl+alt+d",
+    "command": "workbench.action.debug.start"
+  },
+
+  // ====================
+  // FORMATTING & ORGANIZATION
+  // ====================
+  {
+    "key": "ctrl+alt+b",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+alt+f",
+    "command": "editor.action.formatSelection"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "editor.action.organizeImports"
+  },
+
+  // ====================
+  // TERMINAL & PYTHON
+  // ====================
+  {
+    "key": "shift+ctrl+alt+t",
+    "command": "python.execInTerminal"
+  },
+  {
+    "key": "ctrl+alt+r",
+    "command": "workbench.action.tasks.runTask",
+    "args": "run tests"
+  },
+
+  // ====================
+  // GIT AUTOMATION
+  // ====================
+  {
+    "key": "ctrl+alt+g",
+    "command": "git.stageAll"
+  },
+  {
+    "key": "ctrl+alt+p",
+    "command": "git.push"
+  },
+  {
+    "key": "ctrl+alt+c",
+    "command": "workbench.action.tasks.runTask",
+    "args": "commit all changes"
+  },
+  {
+    "key": "ctrl+alt+shift+b",
+    "command": "workbench.action.tasks.runTask",
+    "args": "create feature branch"
+  },
+  {
+    "key": "ctrl+alt+m",
+    "command": "workbench.action.tasks.runTask",
+    "args": "merge main into feature"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "pull latest main"
+  },
+
+  // ====================
+  // DEVELOPMENT SERVER & NOTEBOOK
+  // ====================
+  {
+    "key": "ctrl+alt+shift+s",
+    "command": "workbench.action.tasks.runTask",
+    "args": "start dev server"
+  },
+  {
+    "key": "ctrl+alt+shift+n",
+    "command": "workbench.action.tasks.runTask",
+    "args": "run notebook"
+  },
+
+  // ====================
+  // SUPER TASKS (OPTIONAL)
+  // ====================
+  {
+    "key": "ctrl+alt+shift+r",
+    "command": "workbench.action.tasks.runTask",
+    "args": "super MVP workflow"
+  }
+]
