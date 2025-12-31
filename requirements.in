@@ -14,3 +14,7 @@ h5py
 chardet
 pydantic
 streamlit
+matplotlib
+seaborn
+plotly
+marimo

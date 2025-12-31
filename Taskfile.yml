@@ -4,6 +4,8 @@ version: "3"
 
 vars:
   GREETING: Hello, World!
+  MSG: default commit message <add a message next time>
+  BRANCH: main
 
 tasks:
   default:
@@ -37,3 +39,8 @@ tasks:
     desc: Do main
     cmds:
       - uv run python3 -m main
+
+  do-git:
+    desc: Update repo
+    cmds:
+      - uv run python3 -m scripts.gmanager
