@@ -44,3 +44,10 @@ tasks:
     desc: Update repo
     cmds:
       - uv run python3 -m scripts.gmanager
+
+  build-drafts:
+    desc: Build drafts
+    cmds:
+      - hugo server --buildDrafts
+      - sleep 1
+      - hugo server -D

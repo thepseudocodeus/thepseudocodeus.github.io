@@ -1,4 +1,4 @@
-baseURL = 'https://github.com//'
+baseURL = 'https://github.com/'
 languageCode = 'en-us'
 title = 'The Pseudocodeus'
 theme = 'typo'
@@ -11,7 +11,7 @@ tag = 'tags'
 
 [params]
 # Meta description
-description = "Divergent adventures in mathematics, data science, and software engineering"
+description = "Quantitative adventures using mathematics, science, and engineering on data to solve complex problems"
 
 # Appearance settings
 theme = 'auto'
@@ -22,9 +22,11 @@ hideHeader = false
 homeIntroTitle = 'AJ Igherighe'
 homeIntroContent = """
 
-I am a Data Scientist with a strong math foundation and passionate about helping businesses use data to make better decisions.
+I am a Senior Software Engineer with experience building quantitative systems that improve the Expected Value (EV) of business decisions.
 
-Topics of interest include Financial Engineering, Private Equity, Business Growth Hacking, and Predictive Software Creation.
+Topics of interest include Quantitative Decision Making, Data Science, Financial Engineering, Predictive Modelling, and Poker Mathematics.
+
+Currently teaching a course that helps students improve decision making quality in situations with high uncertainty.
 """
 
 # Collection to display on home
