@@ -1,0 +1,16 @@
+typer
+tdqm
+inquirerpy
+pytest
+ruff
+mypy
+pre-commit
+rich
+pandas
+polars
+numpy
+pyarrow
+h5py
+chardet
+pydantic
+streamlit

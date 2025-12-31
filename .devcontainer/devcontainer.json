@@ -1,74 +1,31 @@
-// .devcontainer/devcontainer.json
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-  "name": "RenTec-DevContainer",
-  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
-  "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ],
-  "containerEnv": {
-    "SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock",
-    "PYTHONPATH": "${containerWorkspaceFolder}/src"
-  },
-  "features": {
-    "ghcr.io/mamba-org/devcontainer-features/micromamba:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": false,
-      "installOhMyZsh": false,
-      "installTmux": true
-    },
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {},
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-  },
-  "forwardPorts": [
-    3000, 5000, 5173, 6006, 7000, 8000, 8080, 8501, 8888, 1234, 5432
-  ],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1-mesa-glx && pipx install poetry && poetry config virtualenvs.in-project true && poetry install",
-  "remoteUser": "vscode",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-vscode.vscode-ssh",
-        "ms-toolsai.jupyter",
-        "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker",
-        "ms-vscode-remote.remote-containers",
-        "usernamehw.errorlens",
-        "ryanluker.vscode-coverage-gutters",
-        "eamodio.gitlens",
-        "charliermarsh.ruff",
-        "ms-python.black-formatter"
-      ],
-      "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.formatting.provider": "none",
-        "python.formatting.blackArgs": ["--line-length=88"],
-        "python.languageServer": "Pylance",
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-          "source.organizeImports": "explicit",
-          "source.fixAll.ruff": "explicit",
-          "source.fixAll": "explicit"
-        },
-        "python.linting.lintOnSave": true,
-        "python.linting.ruffEnabled": true,
-        "python.analysis.typeCheckingMode": "basic",
-        "python.analysis.diagnosticMode": "workspace",
-        "terminal.integrated.defaultProfile.linux": "bash",
-        "terminal.integrated.profiles.linux": {
-          "bash": {
-            "path": "/bin/bash"
-          }
-        },
-        "devcontainers.copyGitConfig": true,
-        "devcontainers.containerUser": "vscode"
-      }
-    }
-  }
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:noble",
+	"features": {
+		"ghcr.io/devcontainers/features/hugo:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {},
+		"ghcr.io/mamba-org/devcontainer-features/micromamba:1": {},
+		"ghcr.io/devcontainers-extra/features/go-task:1": {},
+		"ghcr.io/devcontainers-extra/features/uv:1": {}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }

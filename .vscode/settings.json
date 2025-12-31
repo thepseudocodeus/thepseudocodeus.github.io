@@ -40,7 +40,7 @@
     "editor.stickyScroll.enabled": true,
     "editor.stickyScroll.maxLineCount": 5,
     "editor.inlineSuggest.enabled": true,
-    "editor.hover.enabled": true,
+    "editor.hover.enabled": "on",
     "editor.hover.delay": 300,
     "editor.hover.sticky": true,
     "editor.wordWrap": "bounded",

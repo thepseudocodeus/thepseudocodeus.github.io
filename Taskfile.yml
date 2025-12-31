@@ -1,12 +1,39 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 vars:
   GREETING: Hello, World!
 
 tasks:
   default:
+    desc: Show tasks
     cmds:
-      - echo "{{.GREETING}}"
+      - task -a
     silent: true
+
+  init-py:
+    desc: Add key python packages to environment
+    cmds:
+      - uv pip compile requirements.in -o requirements.txt
+      #- uv add -r requirements.in -c requirements.txt
+      - sleep 0.25
+      - uv add -r requirements.txt
+
+  init-tyedev:
+    desc: Add key tyedev packages to environment
+    cmds:
+      - tyedev init
+
+  git-email:
+    desc: Show email
+    cmds:
+      - echo "Global Git Email:"
+      - git config --global user.email
+      - echo "Local Git Email:"
+      - git config user.email
+
+  do-main:
+    desc: Do main
+    cmds:
+      - uv run python3 -m main
