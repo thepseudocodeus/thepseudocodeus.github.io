@@ -6,6 +6,7 @@ vars:
   GREETING: Hello, World!
   MSG: default commit message <add a message next time>
   BRANCH: main
+  POST: default
 
 tasks:
   default:
@@ -51,3 +52,8 @@ tasks:
       - hugo server --buildDrafts
       - sleep 1
       - hugo server -D
+
+  new-post:
+    desc: Create new blog post
+    cmds:
+      - hugo new content/post/{{.POST}}
